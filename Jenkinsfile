@@ -24,7 +24,13 @@ pipeline {
         stage('Terraform init') {
             steps {
                 withCredentials([azureServicePrincipal(credentialsId: '0123456789', subscriptionIdVariable: 'SUBS_ID', clientIdVariable: 'CLIENT_ID', tenantIdVariable: 'TENANT_ID')]) {
+                    // tf init
                     powershell 'terraform init'
+
+                     // Debugging certificate path
+                    powershell "echo 'Checking certificate path...' && dir C:\\certificates\\tmpx3gp_atc.pem"
+
+                    // tf plan
                     powershell "terraform plan -var 'subscription_id=$SUBS_ID' -var 'tenant_id=$TENANT_ID' -var 'client_id=$CLIENT_ID' -var 'client_certificate_path=C:\\certificates\\tmpx3gp_atc.pem'"
                 }
             }
