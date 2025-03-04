@@ -27,8 +27,11 @@ pipeline {
                     // tf init
                     powershell 'terraform init'
 
-                     // Debugging certificate path
-                    powershell "echo 'Checking certificate path...' && dir C:\\certificates\\tmpx3gp_atc.pem"
+                    // Debugging certificate path - use semicolon (;) instead of &&
+                    powershell """
+                        echo 'Checking certificate path...';
+                        dir C:\\certificates\\tmpx3gp_atc.pem
+                    """
 
                     // tf plan
                     powershell "terraform plan -var 'subscription_id=$SUBS_ID' -var 'tenant_id=$TENANT_ID' -var 'client_id=$CLIENT_ID' -var 'client_certificate_path=C:\\certificates\\tmpx3gp_atc.pem'"
