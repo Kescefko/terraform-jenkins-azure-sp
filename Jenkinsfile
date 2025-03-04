@@ -11,7 +11,7 @@ pipeline {
 
         stage('TF Version') {
             steps {
-                sh 'terraform -version'
+                powershell 'terraform -version'
             }
         }
     }
