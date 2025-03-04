@@ -11,7 +11,7 @@ pipeline {
 
         stage('TF Version') {
             steps {
-                bat 'terraform -version'
+                sh 'terraform -version'
             }
         }
     }
