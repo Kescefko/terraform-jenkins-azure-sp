@@ -7,9 +7,9 @@ variable "tenant_id" {
 variable "client_id" {
   type = string
 }
-variable "client_secret"{
- type = string
-}
+# variable "client_secret"{
+#  type = string
+# }
 variable "client_certificate_path"{
  type = string
 }
