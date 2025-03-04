@@ -40,7 +40,7 @@ pipeline {
                         -var 'subscription_id=$SUBS_ID' \
                         -var 'tenant_id=$TENANT_ID' \
                         -var 'client_id=$CLIENT_ID' \
-                        -var 'client_certificate_path=C:\\certificates\\tmpx3gp_atc.pem'
+                        -var 'client_certificate_path=C:/certificates/tmpx3gp_atc.pem'
                     """
                 }
             }
