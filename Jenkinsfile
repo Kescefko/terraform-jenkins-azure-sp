@@ -11,13 +11,13 @@ pipeline {
 
         stage('TF Version') {
             steps {
-                powershell 'terraform -version'
+                sh 'terraform -version'
             }
         }
 
         stage('TF Init') {
             steps {
-                powershell 'terraform init'
+                sh 'terraform init'
             }
         }
 
