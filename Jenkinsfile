@@ -8,5 +8,11 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Kescefko/terraform-jenkins-azure-sp.git']])
             }
         }
+
+        stage('TF Version') {
+            steps {
+                sh 'terraform -version'
+            }
+        }
     }
 }
