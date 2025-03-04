@@ -21,46 +21,17 @@ pipeline {
             }
         }
 
-        // stage('Terraform init') {
-        //     steps {
-        //         withCredentials([azureServicePrincipal(credentialsId: 'CertAuthTestApp', subscriptionIdVariable: 'SUBS_ID', clientIdVariable: 'CLIENT_ID', tenantIdVariable: 'TENANT_ID'), certificate(credentialsId: '8bb5a193-07e2-4e42-ba14-b15cf3c0a8f0', keystoreVariable: 'CERT_PATH') ]) {
-        //             // tf plan
-        //             // sh "terraform plan -var 'subscription_id=$SUBS_ID' -var 'tenant_id=$TENANT_ID' -var 'client_id=$CLIENT_ID' -var 'client_certificate_path=XXXXX'"
-
-        //             sh '''
-        //                 echo "Using Azure Service Principal"
-        //                 echo "Subscription ID: $SUBS_ID"
-        //                 echo "Tenant ID: $TENANT_ID"
-        //                 echo "Client ID: $CLIENT_ID"
-                        
-        //                 echo "Using certificate stored at: $CERT_PATH"
-
-        //                 # Convert certificate if needed (e.g., extract private key and cert)
-        //                 # openssl pkcs12 -in "$CERT_PATH" -nodes -out cert.pem -password pass:$CERT_PASS
-
-        //                 # Terraform Plan with Certificate Path
-        //                 terraform plan -var "subscription_id=$SUBS_ID" \
-        //                     -var "tenant_id=$TENANT_ID" \
-        //                     -var "client_id=$CLIENT_ID" \
-        //                     -var "client_certificate_path=$CERT_PATH"
-        //             '''
-        //         }
-        //     }
-        // }
-
-
         stage('Terraform init') {
             steps {
-                withCredentials([azureServicePrincipal(credentialsId: 'CertAuthTestApp', subscriptionIdVariable: 'SUBS_ID', clientIdVariable: 'CLIENT_ID', tenantIdVariable: 'TENANT_ID'), file(credentialsId: 'certfile', variable: 'CERT_PATH') ]) {
+                withCredentials([azureServicePrincipal(credentialsId: 'CertAuthTestApp', subscriptionIdVariable: 'SUBS_ID', clientIdVariable: 'CLIENT_ID', tenantIdVariable: 'TENANT_ID'), certificate(credentialsId: '8bb5a193-07e2-4e42-ba14-b15cf3c0a8f0', keystoreVariable: 'CERT_PATH') ]) {
                     // tf plan
                     // sh "terraform plan -var 'subscription_id=$SUBS_ID' -var 'tenant_id=$TENANT_ID' -var 'client_id=$CLIENT_ID' -var 'client_certificate_path=XXXXX'"
 
                     sh '''
-                        printf "Using Azure Service Principal\\n"
-                        printf "Subscription ID: %s\\n" "$SUBS_ID"
-                        printf "Tenant ID: %s\\n" "$TENANT_ID"
-                        printf "Client ID: %s\\n" "$CLIENT_ID"
-                        printf "Using certificate stored at: %s\\n" "$CERT_PATH"
+                        echo "Using Azure Service Principal"
+                        echo "Subscription ID: $SUBS_ID"
+                        echo "Tenant ID: $TENANT_ID"
+                        echo "Client ID: $CLIENT_ID"
                         
                         echo "Using certificate stored at: $CERT_PATH"
 
