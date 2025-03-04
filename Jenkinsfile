@@ -21,24 +21,31 @@ pipeline {
             }
         }
 
-        // stage('Terraform init') {
-        //     steps {
-        //         withCredentials([azureServicePrincipal(credentialsId: '0123456789', subscriptionIdVariable: 'SUBS_ID', clientIdVariable: 'CLIENT_ID', tenantIdVariable: 'TENANT_ID')]) {
-        //             // tf init
-        //             powershell 'terraform init'
+        stage('Terraform init') {
+            steps {
+                withCredentials([azureServicePrincipal(credentialsId: '0123456789', subscriptionIdVariable: 'SUBS_ID', clientIdVariable: 'CLIENT_ID', tenantIdVariable: 'TENANT_ID'), certificate(credentialsId: 'my-cert', keystoreVariable: 'CERT_PATH') ]) {
+                    // tf plan
+                    // sh "terraform plan -var 'subscription_id=$SUBS_ID' -var 'tenant_id=$TENANT_ID' -var 'client_id=$CLIENT_ID' -var 'client_certificate_path=XXXXX'"
 
-        //             // Debugging certificate path - use semicolon (;) instead of &&
-        //             powershell """
-        //                 echo 'Checking certificate path...';
-        //                 dir C:\\certificates\\tmpx3gp_atc.pem
-        //             """
+                    sh '''
+                        echo "Using Azure Service Principal"
+                        echo "Subscription ID: $SUBS_ID"
+                        echo "Tenant ID: $TENANT_ID"
+                        echo "Client ID: $CLIENT_ID"
+                        
+                        echo "Using certificate stored at: $CERT_PATH"
 
-        //             // tf plan
-        //             // powershell "terraform plan -var 'subscription_id=$SUBS_ID' -var 'tenant_id=$TENANT_ID' -var 'client_id=$CLIENT_ID' -var 'client_certificate_path=C:\\certificates\\tmpx3gp_atc.pem'"
-        //             // Directly calling Git Bash using sh.exe
-        //             bat "\"C:\\Program Files\\Git\\bin\\sh.exe\" -c \"terraform init && terraform plan -var \\\"subscription_id=${SUBS_ID}\\\" -var \\\"tenant_id=${TENANT_ID}\\\" -var \\\"client_id=${CLIENT_ID}\\\" -var \\\"client_certificate_path=C:/certificates/tmpx3gp_atc.pem\\\"\""
-        //         }
-        //     }
-        // }
+                        # Convert certificate if needed (e.g., extract private key and cert)
+                        # openssl pkcs12 -in "$CERT_PATH" -nodes -out cert.pem -password pass:$CERT_PASS
+
+                        # Terraform Plan with Certificate Path
+                        terraform plan -var "subscription_id=$SUBS_ID" \
+                            -var "tenant_id=$TENANT_ID" \
+                            -var "client_id=$CLIENT_ID" \
+                            -var "client_certificate_path=$CERT_PATH"
+                    '''
+                }
+            }
+        }
     }
 }
