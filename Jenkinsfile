@@ -20,5 +20,11 @@ pipeline {
                 powershell 'terraform init'
             }
         }
+
+        stage('TF Plan') {
+            steps {
+                powershell 'terraform plan'
+            }
+        }
     }
 }
