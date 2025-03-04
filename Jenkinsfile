@@ -56,10 +56,11 @@ pipeline {
                     // sh "terraform plan -var 'subscription_id=$SUBS_ID' -var 'tenant_id=$TENANT_ID' -var 'client_id=$CLIENT_ID' -var 'client_certificate_path=XXXXX'"
 
                     sh '''
-                        echo "Using Azure Service Principal"
-                        echo "Subscription ID: $SUBS_ID"
-                        echo "Tenant ID: $TENANT_ID"
-                        echo "Client ID: $CLIENT_ID"
+                        printf "Using Azure Service Principal\\n"
+                        printf "Subscription ID: %s\\n" "$SUBS_ID"
+                        printf "Tenant ID: %s\\n" "$TENANT_ID"
+                        printf "Client ID: %s\\n" "$CLIENT_ID"
+                        printf "Using certificate stored at: %s\\n" "$CERT_PATH"
                         
                         echo "Using certificate stored at: $CERT_PATH"
 
