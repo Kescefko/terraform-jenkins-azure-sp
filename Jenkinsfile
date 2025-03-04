@@ -14,5 +14,11 @@ pipeline {
                 powershell 'terraform -version'
             }
         }
+
+        stage('TF Init') {
+            steps {
+                powershell 'terraform init'
+            }
+        }
     }
 }
