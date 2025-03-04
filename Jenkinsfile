@@ -23,7 +23,7 @@ pipeline {
 
         stage('Terraform init') {
             steps {
-                withCredentials([azureServicePrincipal(credentialsId: '0123456789', subscriptionIdVariable: 'SUBS_ID', clientIdVariable: 'CLIENT_ID', tenantIdVariable: 'TENANT_ID'), certificate(credentialsId: 'my-cert', keystoreVariable: 'CERT_PATH') ]) {
+                withCredentials([azureServicePrincipal(credentialsId: 'CertAuthTestApp', subscriptionIdVariable: 'SUBS_ID', clientIdVariable: 'CLIENT_ID', tenantIdVariable: 'TENANT_ID'), certificate(credentialsId: '8bb5a193-07e2-4e42-ba14-b15cf3c0a8f0', keystoreVariable: 'CERT_PATH') ]) {
                     // tf plan
                     // sh "terraform plan -var 'subscription_id=$SUBS_ID' -var 'tenant_id=$TENANT_ID' -var 'client_id=$CLIENT_ID' -var 'client_certificate_path=XXXXX'"
 
