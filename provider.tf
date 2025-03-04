@@ -12,5 +12,6 @@ provider "azurerm" {
   tenant_id       = var.tenant_id
   client_id       = var.client_id
   client_secret   = var.client_secret
+  client_certificate_path   = var.client_certificate_path
   features {}
 }
